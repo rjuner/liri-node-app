@@ -8,18 +8,33 @@ var keys = require('./keys.js');
 
 var nodeArgs = process.argv;
 
-console.log(nodeArgs);
+var action = process.argv[2];
+var value = process.argv[3];
 
-var client = new Twitter(keys.twitterKeys);
+//console.log(nodeArgs);
 
-var params = {screen_name: 'rjuner', count: 30, include_rts: false};
+switch(action){
+	case 'my-tweets': myTweets(); 
+	break; 
+}
 
-client.get('statuses/user_timeline', params, function(error, tweets, response){
-  if (!error) {
-  	for(i = 0; i < 20; i++){
-    console.log(tweets[i].text);
-	}
-  }
-});
+function myTweets(){
+
+	var client = new Twitter(keys.twitterKeys);
+
+	var params = {screen_name: 'rjuner', count: 30, include_rts: false};
+
+	client.get('statuses/user_timeline', params, function(error, tweets, response){
+	  if (!error) {
+	  	for(i = 0; i < 20; i++){
+	    console.log(tweets[i].text + "\n ");
+		}
+	  }
+	});
+
+}
+
+
+
 
 //data.tracks.items[0]

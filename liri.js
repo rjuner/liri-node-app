@@ -14,7 +14,7 @@ for(var i = 4; i < process.argv.length; i++){
 	value = value + " " + process.argv[i];
 }
 
-console.log("what's this? " + value);
+//console.log("what's this? " + value);
 
 switch(action){
 	case 'my-tweets': myTweets(); 

@@ -19,6 +19,9 @@ switch(action){
 
 	case 'spotify-this-song': spotifyThis();
 	break; 
+
+	case 'movie-this': omdb();
+	break;
 }
 
 function myTweets(){
@@ -30,7 +33,7 @@ function myTweets(){
 	client.get('statuses/user_timeline', params, function(error, tweets, response){
 	  if (!error) {
 	  	for(i = 0; i < 20; i++){
-	    console.log(tweets[i].text + "\n ");
+	    console.log(tweets[i].text + "\n " + "Date of Tweet: " + tweets[i].created_at + "\n");
 		}
 	  }
 	});
@@ -49,8 +52,14 @@ function spotifyThis(){
 	 		var songResult = console.log(
 	 				"Artist of song is: " + songInfo.artists[0].name + "\n" 
 	 				+ "Song name is: " + songInfo.name + "\n" 
-	 				+ "Album song is: " + songInfo.album.name);
+	 				+ "Album song is: " + songInfo.album.name + "\n"  
+	 				+ "Preview the song: " + songInfo.preview_url
+	 				);
 		}
 	});
+
+}
+
+function omdb(){
 
 }

@@ -6,12 +6,8 @@ var request = require('request');
 
 var keys = require('./keys.js');
 
-var nodeArgs = process.argv;
-
 var action = process.argv[2];
 var value = process.argv[3];
-
-//console.log(nodeArgs);
 
 switch(action){
 	case 'my-tweets': myTweets(); 
@@ -66,7 +62,12 @@ function omdb(){
 
 	request(queryURL, function (error, response, body){
 		if (!error && response.statusCode == 200) {
-			console.log("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
+			var data = JSON.parse(body);
+			console.log(
+				"Movie Title: " + data.Title + "\n" + 
+				"Year Produced: " +  data.Year + "\n" + 
+				"IMDB Rating: " + data.imdbRating + "\n" + 
+				"Rotten Tomatoes Rating: " + data.tomatoRating + "\n");
 		}else{
 			console.log(error);
 		}

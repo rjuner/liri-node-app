@@ -18,6 +18,9 @@ switch(action){
 
 	case 'movie-this': omdb();
 	break;
+
+	case 'do-what-it-says': justDoIt(); 
+	break;
 }
 
 function myTweets(){
@@ -39,6 +42,12 @@ function myTweets(){
 function spotifyThis(){
 
 	spotify.search({type: 'track', query: value}, function(err, data) {
+
+		// if (value == null){
+		// 	console.log("You didn't pick a song, so here's a punk classic:"); 
+		// }
+		// KEEPS RETURNING THE SONG UNDEFINED
+
 		if (err) {
 	        console.log('Error occurred: ' + err);
 	        return;
@@ -53,7 +62,6 @@ function spotifyThis(){
 	 				);
 		}
 	});
-
 }
 
 function omdb(){
@@ -71,6 +79,20 @@ function omdb(){
 		}else{
 			console.log(error);
 		}
+	});
+
+}
+
+function justDoIt(){
+	fs.readFile('random.txt', 'utf8', function(err, data){
+
+		var textData = data.split(", ");
+
+		action = textData[0];
+		value = textData[1];
+
+		spotifyThis(action, value);
+		
 	});
 
 }

@@ -62,4 +62,14 @@ function spotifyThis(){
 
 function omdb(){
 
+	var queryURL = "http://www.omdbapi.com/?t=" + value + "&y&plot=short&r=json&tomatoes=true"; 
+
+	request(queryURL, function (error, response, body){
+		if (!error && response.statusCode == 200) {
+			console.log("Rotten Tomatoes Rating: " + JSON.parse(body)["tomatoRating"]);
+		}else{
+			console.log(error);
+		}
+	});
+
 }

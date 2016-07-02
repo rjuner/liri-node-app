@@ -9,6 +9,13 @@ var keys = require('./keys.js');
 var action = process.argv[2];
 var value = process.argv[3];
 
+//makes it so you can get multi-word inputs because it goes through the whole array process.argv
+for(var i = 4; i < process.argv.length; i++){
+	value = value + " " + process.argv[i];
+}
+
+console.log("what's this? " + value);
+
 switch(action){
 	case 'my-tweets': myTweets(); 
 	break; 
@@ -41,12 +48,14 @@ function myTweets(){
 
 function spotifyThis(){
 
-	spotify.search({type: 'track', query: value}, function(err, data) {
+	if (value == null){
 
-		// if (value == null){
-		// 	console.log("You didn't pick a song, so here's a punk classic:"); 
-		// }
-		// KEEPS RETURNING THE SONG UNDEFINED
+		value = "What's my age again?";
+	
+	console.log("You didn't pick a song, so here's a punk classic:"); 
+	}
+
+	spotify.search({type: 'track', query: value}, function(err, data) {
 
 		if (err) {
 	        console.log('Error occurred: ' + err);
@@ -66,6 +75,17 @@ function spotifyThis(){
 
 function omdb(){
 
+	if (value == null){
+
+		value = "Mr. Nobody";
+
+		console.log("You didn't pick a movie, so here's a movie you didn't know existed: "); 
+	}
+
+	// console.log("the string is: " + value);
+
+	// console.log("This is the index of: " + value.indexOf("\""));
+	
 	var queryURL = "http://www.omdbapi.com/?t=" + value + "&y&plot=short&r=json&tomatoes=true"; 
 
 	request(queryURL, function (error, response, body){
@@ -84,6 +104,7 @@ function omdb(){
 }
 
 function justDoIt(){
+
 	fs.readFile('random.txt', 'utf8', function(err, data){
 
 		var textData = data.split(", ");
@@ -91,8 +112,25 @@ function justDoIt(){
 		action = textData[0];
 		value = textData[1];
 
-		spotifyThis(action, value);
-		
+		//takes string in text file and removes the first and last quotes
+		value = value.substr(1, value.length-2);
+
+		console.log(value);
+
+		switch(action){
+			case 'my-tweets': myTweets(); 
+			break; 
+
+			case 'spotify-this-song': spotifyThis(action, value);
+			break; 
+
+			case 'movie-this': omdb(action, value);
+			break;
+
+			case 'do-what-it-says': justDoIt(); 
+			break;
+		}
+
 	});
 
 }

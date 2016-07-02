@@ -16,6 +16,9 @@ var value = process.argv[3];
 switch(action){
 	case 'my-tweets': myTweets(); 
 	break; 
+
+	case 'spotify-this-song': spotifyThis();
+	break; 
 }
 
 function myTweets(){
@@ -34,7 +37,20 @@ function myTweets(){
 
 }
 
+function spotifyThis(){
 
+	spotify.search({type: 'track', query: value}, function(err, data) {
+		if (err) {
+	        console.log('Error occurred: ' + err);
+	        return;
+	    } else {
+	 		// Do something with 'data' 
+	 		var songInfo = data.tracks.items[0];
+	 		var songResult = console.log(
+	 				"Artist of song is: " + songInfo.artists[0].name + "\n" 
+	 				+ "Song name is: " + songInfo.name + "\n" 
+	 				+ "Album song is: " + songInfo.album.name);
+		}
+	});
 
-
-//data.tracks.items[0]
+}
